@@ -5,15 +5,15 @@ require 'pry'
 
 puts "Fetching raw data....."
 
-#fetch JSON and parse
+# fetch JSON and parse
 filepath = "data.json"
 raw_data = File.read(filepath)
 data = JSON.parse(raw_data)
 
-#build array of car objects from parsed JSON
+# build array of car objects from parsed JSON
 cars = data["cars"].map {|car_data| Car.new(car_data)}
 
-#build array of rentals objects from parsed JSON, including car object associated with rental
+# build array of rentals objects from parsed JSON, including car object associated with rental
 rentals = data["rentals"].map {|rental_data| Rental.new(
   rental_data['id'],
   cars.select { |c| c.id == rental_data['car_id'] }.first,
@@ -23,7 +23,7 @@ rentals = data["rentals"].map {|rental_data| Rental.new(
   )}
 
 
-#calculate full prices of rentals
+# calculate full prices of rentals
 output = {rentals: []}
 rentals.each do |rental|
   output[:rentals] << { 'id' => rental.id, 'price' => rental.full_price }
@@ -39,7 +39,7 @@ puts "printing complete"
 puts
 
 
-#Generate prettified JSON file from output
+# Generate prettified JSON file from output
 puts "generating JSON file"
 puts "--------------------"
 # Generate prettified JSON file from output
